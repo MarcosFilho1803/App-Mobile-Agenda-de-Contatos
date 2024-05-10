@@ -8,17 +8,17 @@ const Stack = createStackNavigator();
 function Home ({ navigation }){
   return(
     <View style={styles.container}>
+      <View>
+      <Text style={styles.titulo}>Agenda de Contatos</Text>
+      </View>
       <Text>Hello World</Text>
-      <Button
-          title="Contatos"
-          onPress={ () => navigation.navigate('Contatos')}
-        />
+      <Button title="Adcionar Contato" onPress={ () => navigation.navigate('Adcionar Contato')} />
     </View>
   )
 }
 
 
-function Contatos ({ navigation }){
+function AdcionarContato ({ navigation }){
   return(
     <View style={styles.container}>
       <Text>Contatos</Text>
@@ -30,7 +30,7 @@ export default function HomeScreen() {
   return (
      <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Contatos" component={Contatos} />
+      <Stack.Screen name="Adcionar Contato" component={AdcionarContato} />
     </Stack.Navigator>
 
 
@@ -46,5 +46,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 10,
+  },
+  titulo:{
+    marginBottom: 40,
+    fontSize: 20,
+    fontWeight: '900',
   }
 })
