@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
+
+
 function Home ({navigation}){
   return(
     <View style={styles.principal}>
@@ -21,6 +23,17 @@ function Home ({navigation}){
         <View style={styles.titulo}>
           <Text style={{fontSize: 30, fontWeight: '900', textAlign: 'center'}}>Contatos</Text>
         </View>
+
+        <View style={styles.contatoContainer}>
+          <View style={styles.cardContato}>
+            <Text>Junim Matador de Porco</Text>
+          </View>
+          <View style={styles.cardContato}>
+            <Text>Flavim do pneu</Text>
+          </View>
+        </View>
+        
+        
     </View>
   )
 }
@@ -51,7 +64,7 @@ const styles = StyleSheet.create({
   principal: {
     flex: 1,
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       backgroundColor: 'white',
   },
   menu: {
@@ -61,7 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   btnADD:{
-    padding: 10
+    padding: 10 
   },
   titulo: {
     position: 'absolute', // Define a posição absoluta para o título
@@ -73,5 +86,14 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Centraliza horizontalmente o texto do título
     backgroundColor: 'white', // Cor de fundo do título
     
+  },
+  contatoContainer: {
+    backgroundColor: "#eee",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 130
+  },
+  cardContato:{
+    marginBottom: 10,
   }
 })
