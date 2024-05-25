@@ -1,19 +1,50 @@
 import React from "react";
 import {View,  Text, StyleSheet, TouchableHighlight} from "react-native";
 
+import { db } from '../config/firebase'
+import { ref, onValue } from "firebase/database";
+
 class ListarContatos extends React.Component{
+    state = {
+        contatos: []
+    }
+
+    componentDidMount(){
         
-    render(){
-        return(
-                <View style={styles.contatoContainer}>
-                    <TouchableHighlight underlayColor={"white"} onPress={ () => navigation.navigate('Editar') } style={styles.cardContato}>
-                    <Text style={{ fontWeight: '400'}}>João clóvão</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight underlayColor={"white"} onPress={ () => navigation.navigate('Editar') } style={styles.cardContato}>
-                    <Text style={{ fontWeight: '400'}}>Shaolin matador de porco</Text>
-                    </TouchableHighlight>
-                </View>
-        )
+        const contatosRef = ref(db, 'contatos/');
+        onValue(contatosRef, (snapshot) => {
+            let data = snapshot.val();
+            if (data) {
+                let contatos = Object.values(data);
+                this.setState( { contatos });
+            } else {
+                this.setState({ contatos: [] });
+            }
+        });
+    }
+    render() {
+
+        return (
+            <View style={styles.contatoContainer}>
+                {
+                    this.state.contatos.length > 0 ? (
+                        this.state.contatos.map(({contato}, index) => {
+                            return (
+                            <View key={index} style={styles.cardContato}>
+                                <TouchableHighlight
+                                    underlayColor={"white"} // Certifique-se de que 'Editar' é a rota correta
+                                >
+                                    <Text style={{ fontWeight: '400' }}>{contato.nome}</Text>
+                                </TouchableHighlight>
+                            </View>
+                            );
+                        })
+                    ) : (
+                        <Text>Nenhum contato disponível.</Text>
+                    )
+                }
+            </View>
+        );
     }
 }
 
