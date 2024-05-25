@@ -22,7 +22,7 @@ function Home ({navigation}){
         <View style={styles.titulo}>
           <Text style={{fontSize: 30, fontWeight: '900', textAlign: 'center'}}>Contatos</Text>
         </View>
-        <ListarContato></ListarContato>
+        <ListarContato navigation = {navigation}></ListarContato>
     </View>
   )
 }

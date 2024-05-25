@@ -9,35 +9,43 @@ class ListarContatos extends React.Component{
         contatos: []
     }
 
-    componentDidMount(){
-        
-        const contatosRef = ref(db, 'contatos/');
+    componentDidMount(){ 
+        const contatosRef = ref(db, '/contatos');
         onValue(contatosRef, (snapshot) => {
             let data = snapshot.val();
             if (data) {
-                let contatos = Object.values(data);
-                this.setState( { contatos });
+                const contatos = Object.keys(data).map(key => ({ key, ...data[key] }));
+                this.setState({ contatos });
+                console.log("\n Contatos carregados do banco: ", contatos);
+                console.log("\n Contatos o estados: ", this.state.contatos);
             } else {
                 this.setState({ contatos: [] });
             }
         });
     }
     render() {
+        const { navigation } = this.props;
 
         return (
             <View style={styles.contatoContainer}>
                 {
                     this.state.contatos.length > 0 ? (
-                        this.state.contatos.map(({contato}, index) => {
-                            return (
-                            <View key={index} style={styles.cardContato}>
-                                <TouchableHighlight
-                                    underlayColor={"white"} // Certifique-se de que 'Editar' é a rota correta
-                                >
-                                    <Text style={{ fontWeight: '400' }}>{contato.nome}</Text>
-                                </TouchableHighlight>
-                            </View>
-                            );
+                        this.state.contatos.map(({key,  nome, numero}) => {
+                                return (
+                                    <View key={key} style={styles.cardContato}>
+                                        <TouchableHighlight
+                                            underlayColor={"white"} // Certifique-se de que 'Editar' é a rota correta
+                                            onPress={ () => navigation.navigate('Adcionar Contato',  { nome, numero, key }) }
+                                        >
+                                            
+                                            <View>
+                                                <Text style={{ fontWeight: '400' }}>{nome}</Text>
+                                                <Text style={{ fontWeight: '400' }}>{numero}</Text>
+                                            </View>
+                                            
+                                        </TouchableHighlight>
+                                    </View>
+                                    );
                         })
                     ) : (
                         <Text>Nenhum contato disponível.</Text>
