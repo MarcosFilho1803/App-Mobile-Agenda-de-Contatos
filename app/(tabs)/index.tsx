@@ -20,7 +20,7 @@ function Home ({navigation}){
       </View>
 
         <View style={styles.titulo}>
-          <Text style={{fontSize: 30, fontWeight: '900', textAlign: 'center'}}>Contatos</Text>
+          <Text style={{fontSize: 30, fontWeight: '300', textAlign: 'center'}}>Contatos</Text>
         </View>
         <ListarContato navigation = {navigation}></ListarContato>
     </View>
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   },
   cardContato:{
     marginBottom: 10,
-   
   },
   input: {
     height: 40,

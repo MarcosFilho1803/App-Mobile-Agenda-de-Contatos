@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput,  View,  Text,  TouchableHighlight, StyleSheet, Alert} from "react-native";
+import { TextInput,  View,  Text,  TouchableHighlight, StyleSheet, Alert,Button} from "react-native";
 
 import { db } from '../config/firebase'
 import { ref, push, update } from "firebase/database";
@@ -30,6 +30,24 @@ class AdcionarContato extends React.Component{
                 Alert.alert('Contato atualizado com sucesso!');
             }).catch(error => {
                 Alert.alert('Erro ao atualizar o contato: ', error.message);
+            });
+        } else {
+            Alert.alert('Erro: Chave do contato não encontrada.');
+        }
+    }
+
+    apagarContato = () => {
+        const { key } = this.state;
+        console.log(this.state)
+        if (key) {
+            const contatoRef = ref(db, `/contatos/${key}`);
+            update(contatoRef, {
+                    nome: null,
+                    numero:null,
+            }).then(() => {
+                Alert.alert('Contato excluido com sucesso!');
+            }).catch(error => {
+                Alert.alert('Erro ao excluir o contato: ', error.message);
             });
         } else {
             Alert.alert('Erro: Chave do contato não encontrada.');
@@ -78,11 +96,21 @@ class AdcionarContato extends React.Component{
                         />
                     {
                         this.props.route.params ? 
-                        <TouchableHighlight underlayColor={"white"} onPress={ this.alterarContato }>
-                            <Text>
-                                Alterar
-                            </Text>
-                        </TouchableHighlight> 
+                        
+                        <View>
+                            <TouchableHighlight underlayColor={"white"} onPress={ this.alterarContato }>
+                                <Text>
+                                    Alterar
+                                </Text>
+                            </TouchableHighlight> 
+                            
+                            <Button
+                            onPress={ this.apagarContato }
+                                title="Apagar"
+                                color="red"
+                            />
+                        </View>
+                        
                         
                         : 
                         
